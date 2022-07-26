@@ -10,9 +10,10 @@ startBtn.style.border = '2px solid green';
 startBtn.style.borderRadius = '10px';
 startBtn.style.backgroundColor = '#97EAB9';
 
+stopBtn.setAttribute('disabled', 'true');
 stopBtn.style.width = '70px';
 stopBtn.style.height = '40px';
-stopBtn.style.border = '2px solid red';
+stopBtn.style.border = '2px solid transparent';
 stopBtn.style.borderRadius = '10px';
 stopBtn.style.backgroundColor = 'pink';
 
