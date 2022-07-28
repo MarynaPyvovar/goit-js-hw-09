@@ -9,6 +9,7 @@ const timerEl = document.querySelector('.timer');
 const fieldEl = document.querySelectorAll('.field');
 
 timerEl.style.display = 'flex';
+timerEl.style.padding = '30px';
 fieldEl.forEach(item => (item.style.display = 'flex'));
 fieldEl.forEach(item => (item.style.flexDirection = 'column'));
 fieldEl.forEach(item => (item.style.alignItems = 'center'));
@@ -49,6 +50,8 @@ function onStartClick() {
     valueEl[2].textContent = timerValue.minutes;
     valueEl[3].textContent = timerValue.seconds;
   }, 1000);
+  startBtn.setAttribute('disabled', true);
+  datePicker.setAttribute('disabled', true);
 }
 
 function convertMs(ms) {
