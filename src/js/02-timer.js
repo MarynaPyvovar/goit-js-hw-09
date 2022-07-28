@@ -2,6 +2,18 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 
+const startBtn = document.querySelector('[data-start]');
+const datePicker = document.querySelector('#datetime-picker');
+const valueEl = document.querySelectorAll('.value');
+const timerEl = document.querySelector('.timer');
+const fieldEl = document.querySelectorAll('.field');
+
+timerEl.style.display = 'flex';
+fieldEl.forEach(item => (item.style.display = 'flex'));
+fieldEl.forEach(item => (item.style.flexDirection = 'column'));
+fieldEl.forEach(item => (item.style.alignItems = 'center'));
+fieldEl.forEach(item => (item.style.marginRight = '20px'));
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -16,22 +28,27 @@ const options = {
   },
 };
 
-const startBtn = document.querySelector('[data-start]');
-const timerEl = document.querySelector('.timer');
-const field = document.querySelector('.field');
+startBtn.setAttribute('disabled', true);
 
-// timerEl.style.display = 'flex';
-// timerEl.childNodes.style.display = 'flex';
-// timerEl.childNodes.style.flexDirection = 'column';
-
+datePicker.addEventListener('input', onDatePickerClick);
 startBtn.addEventListener('click', onStartClick);
 
 const finalDate = flatpickr('#datetime-picker', options);
 
-// console.log(convertMs(1660160909548 - Date.now()));
+function onDatePickerClick() {
+  if (finalDate.selectedDates[0] > Date.now()) {
+    startBtn.removeAttribute('disabled');
+  }
+}
 
 function onStartClick() {
-  console.log('start timer');
+  setInterval(() => {
+    const timerValue = convertMs(finalDate.selectedDates[0] - Date.now());
+    valueEl[0].textContent = timerValue.days;
+    valueEl[1].textContent = timerValue.hours;
+    valueEl[2].textContent = timerValue.minutes;
+    valueEl[3].textContent = timerValue.seconds;
+  }, 1000);
 }
 
 function convertMs(ms) {
