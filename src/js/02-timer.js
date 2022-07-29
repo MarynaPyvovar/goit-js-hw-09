@@ -8,6 +8,8 @@ const valueEl = document.querySelectorAll('.value');
 const timerEl = document.querySelector('.timer');
 const fieldEl = document.querySelectorAll('.field');
 
+let timerId = 0;
+
 timerEl.style.display = 'flex';
 timerEl.style.padding = '30px';
 fieldEl.forEach(item => (item.style.display = 'flex'));
@@ -43,12 +45,22 @@ function onDatePickerClick() {
 }
 
 function onStartClick() {
-  setInterval(() => {
+  const timerId = setInterval(() => {
     const timerValue = convertMs(finalDate.selectedDates[0] - Date.now());
     valueEl[0].textContent = timerValue.days;
     valueEl[1].textContent = timerValue.hours;
     valueEl[2].textContent = timerValue.minutes;
     valueEl[3].textContent = timerValue.seconds;
+
+    if (
+      valueEl[0].textContent === '00' &&
+      valueEl[1].textContent === '00' &&
+      valueEl[2].textContent === '00' &&
+      valueEl[3].textContent === '00'
+    ) {
+      clearInterval(timerId);
+      datePicker.removeAttribute('disabled');
+    }
   }, 1000);
   startBtn.setAttribute('disabled', true);
   datePicker.setAttribute('disabled', true);
